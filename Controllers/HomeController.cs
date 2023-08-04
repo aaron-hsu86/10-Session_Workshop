@@ -52,8 +52,6 @@ public class HomeController : Controller
     [HttpGet("modifyNumber/{modifier}")]
     public IActionResult ModifyNumber(string modifier)
     {
-        Console.WriteLine("Modify Number");
-        Console.WriteLine(modifier);
         if (HttpContext.Session.GetString("Name") == null)
         {
             return RedirectToAction("Index");
