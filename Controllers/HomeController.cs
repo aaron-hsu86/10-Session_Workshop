@@ -85,6 +85,55 @@ public class HomeController : Controller
         return RedirectToAction("Dashboard");
     }
 
+    [HttpGet("ModifyNumber")]
+    public IActionResult ModifyNumber2(string modifier)
+    {
+        if (HttpContext.Session.GetString("Name") == null)
+        {
+            return RedirectToAction("Index");
+        }
+
+        Random random = new Random();
+        int number = Convert.ToInt32(HttpContext.Session.GetInt32("Number"));
+
+        if (modifier == "+1")
+        {
+            number+=1;
+            HttpContext.Session.SetInt32("Number", number);
+        }
+        else if (modifier == "-1")
+        {
+            number-=1;
+            HttpContext.Session.SetInt32("Number", number);
+        }
+        else if (modifier == "x2")
+        {
+            number *= 2;
+            HttpContext.Session.SetInt32("Number", number);
+        }
+        else if (modifier == "rand")
+        {
+            int randInt = random.Next(1,11);
+            number += randInt;
+            HttpContext.Session.SetInt32("Number", number);
+        }
+
+        return RedirectToAction("Dashboard");
+    }
+
+    [HttpGet("reset")]
+    public IActionResult ResetNum()
+    {
+        if (HttpContext.Session.GetString("Name") == null)
+        {
+            return RedirectToAction("Index");
+        }
+    
+        HttpContext.Session.SetInt32("Number", 0);
+
+        return RedirectToAction("Dashboard");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
